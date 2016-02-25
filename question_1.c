@@ -2,8 +2,8 @@
 // Running the program to each situacion we heva:
 //
 // a) Deadlock
-// b) Deadlock
-// c) Deadlock
+// b) 
+// c) 
 // d) Deadlock
 
 
@@ -52,7 +52,7 @@ int main(){
 void *routine(void *ID){
 
 	int thread_func;
-	int j, k, l;
+	int j, k, l, value;
 	thread_func = (int)ID;
 
 	switch(thread_func){
@@ -62,10 +62,19 @@ void *routine(void *ID){
 		case 0:	
 			for(j=0; j<MIN_EXEC; j++){			
 				sem_wait(&semaphore[0]);
+				sem_getvalue(&semaphore[0], &value);
+				printf("Value of semaphore[0] = %d\n",value);
 				sem_wait(&semaphore[0]);
+				sem_getvalue(&semaphore[0], &value);
+				printf("Value of semaphore[0] = %d\n",value);
 				sem_wait(&semaphore[0]);	
+				sem_getvalue(&semaphore[0], &value);
+				printf("Value of semaphore[0] = %d\n",value);
 				printf("Thread: %d\n", thread_func);
 				sem_post(&semaphore[1]);	
+				sem_getvalue(&semaphore[1], &value);
+				printf("Value of semaphore[1] = %d\n", value);
+
 			}	
 		break;
 
@@ -74,9 +83,15 @@ void *routine(void *ID){
 		case 1:		
 			for(k=0; k<MIN_EXEC; k++){
 				sem_wait(&semaphore[1]);
+				sem_getvalue(&semaphore[1], &value);
+				printf("Value of semaphore[1] = %d\n",value);
 				printf("Thread: %d\n", thread_func);
 				sem_post(&semaphore[2]);
+				sem_getvalue(&semaphore[2], &value);
+				printf("Value of semaphore[2] = %d\n",value);
 				sem_post(&semaphore[0]);
+				sem_getvalue(&semaphore[0], &value);
+				printf("Value of semaphore[0] = %d\n",value);
 			}
 		break;
 
@@ -84,16 +99,26 @@ void *routine(void *ID){
 		case 2:
 			for(l=0; l<MIN_EXEC; l++){
 				sem_wait(&semaphore[2]);
+				sem_getvalue(&semaphore[2], &value);
+				printf("Value of semaphore[2] = %d\n",value);
 				sem_wait(&semaphore[2]);
+				sem_getvalue(&semaphore[2], &value);
+				printf("Value of semaphore[2] = %d\n",value);
 				sem_wait(&semaphore[2]);	
+				sem_getvalue(&semaphore[2], &value);
+				printf("Value of semaphore[2] = %d\n",value);
 				printf("Thread: %d\n", thread_func);
 				sem_post(&semaphore[1]);
+				sem_getvalue(&semaphore[1], &value);
+				printf("Value of semaphore[1] = %d\n",value);
 				sem_post(&semaphore[1]);
+				sem_getvalue(&semaphore[1], &value);
+				printf("Value of semaphore[1] = %d\n",value);
 			}
 		break;
 
 		default:
-			printf("ERROR!\n");
+			break;
 	}
 
 }
