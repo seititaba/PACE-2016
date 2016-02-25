@@ -73,7 +73,7 @@ de sincronizacao?
   A		  B		Tempo
   |		  |		  |
   |		  |		  |
-WRITE	READ	  |
+WRITE		READ		  |
   |		  |		  |
   |		  |		  V
   
